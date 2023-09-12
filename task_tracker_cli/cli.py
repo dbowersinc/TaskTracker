@@ -50,12 +50,22 @@ def run(username, password):
     from task_tracker.main import handle_user
     from task_tracker.data.model import User
     # User connection
-    response = handle_user(username, password)
-    current_user = response["user"]
-    if current_user:
-        click.echo(f"Welcome {current_user.username}!")
-    else:
-        click.echo("User not found.")
+    with Session() as session:
+        response = handle_user(session, username, password)
+        current_user = response["user"]
+        if current_user:
+            click.echo(f"Welcome {current_user.username}!")
+            # User logged in, is there a current task?
+            if current_user.user_current_tasks:
+                click.echo(f"Current task: {current_user.current_task.description}")
+            else:
+                click.echo("No current task. Delivering list of tasks.")
+                # User should be able to select a task, or
+                # create a new task by typing a description
+                # List tasks
+
+        else:
+            click.echo("User not found.")
     # Actions based on user current tasks
 
     # Report and exit || perform another action
