@@ -35,7 +35,9 @@ tasks init-db
 
 ## Usage
 
-Run the program
+Run the program [local database - no security]
+TODO - create user... :)
+
 ```cli
 tasks run <username> -p <password>
 ```
