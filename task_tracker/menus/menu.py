@@ -9,17 +9,20 @@ class Menu:
     """
     OPTIONS_MAIN = [Option("Quit", "Return to the main menu.", lambda **kwargs: print("Quit selected."))]
 
-    def __init__(self, title, intro, options_list: list[Option]):
+    def __init__(self, title, intro, options_list: list[Option], show_top_option=True):
         self.title = title
         self.intro = intro
-        self.options = Menu.OPTIONS_MAIN + options_list
         self.options_menu = self.create_options_menu()
+        self.options = Menu.OPTIONS_MAIN + options_list
+        if show_top_option is False:
+            self.options[0] = None
 
     def create_options_menu(self):
         """Create the options menu."""
         options_menu = []
         for idx, option in enumerate(self.options):
-            options_menu.append(f"{idx}. {option.summary}")
+            if option:
+                options_menu.append(f"{idx}. {option.summary}")
         return options_menu
 
     def get_confirm_statement(self, idx: int):
