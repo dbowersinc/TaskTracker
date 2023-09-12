@@ -19,7 +19,8 @@ class User(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     username: Mapped[str] = mapped_column(String(50), nullable=False, unique=True)
     password: Mapped[str] = mapped_column(String(256), nullable=False)
-    user_current_tasks: Mapped["UserCurrentTask"] = relationship(back_populates="user", cascade="all, delete-orphan")
+    task_id: Mapped[Optional[int]] = mapped_column(ForeignKey("tasks.id"), nullable=True)
+    current_task: Mapped["Task"] = relationship(back_populates="user")
     user_task_state_records: Mapped[List["UserTaskStateRecord"]] = relationship(back_populates="user")
 
 
@@ -29,17 +30,8 @@ class Task(Base):
     title: Mapped[str] = mapped_column(String(50), nullable=False)
     description: Mapped[str] = mapped_column(String(256), nullable=False)
     state: Mapped[str] = mapped_column(String(50), nullable=False)
-    users_in_progress: Mapped[List["UserCurrentTask"]] = relationship(back_populates="task")
+    user: Mapped[List["User"]] = relationship(back_populates="current_task")
     user_task_state_records: Mapped[List["UserTaskStateRecord"]] = relationship(back_populates="task")
-
-
-class UserCurrentTask(Base):
-    __tablename__ = "user_current_tasks"
-    id: Mapped[int] = mapped_column(primary_key=True)
-    user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=False)
-    task_id: Mapped[int] = mapped_column(ForeignKey("tasks.id"), nullable=False)
-    user: Mapped[User] = relationship(back_populates="user_current_tasks")
-    task: Mapped[Task] = relationship(back_populates="users_in_progress")
 
 
 class UserTaskStateRecord(Base):

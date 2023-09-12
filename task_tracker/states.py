@@ -1,3 +1,4 @@
+# in_progress, in_review, and paused need special handling.
 
 STATES = [
     {
@@ -23,16 +24,16 @@ STATES = [
     {
         "state": "in_review",
         "description": "Task is in review.",
-        "follows": ["in_progress"]
+        "follows": ["for_approval", "paused"]
     },
     {
         "state": "for_approval",
         "description": "Task is waiting for review and approval.",
-        "follows": ["in_review"]
+        "follows": ["in_progress"]
     },
     {
         "state": "done",
         "description": "Task is done.",
-        "follows": ["for_approval"]
+        "follows": ["in_review"]
     }
 ]
