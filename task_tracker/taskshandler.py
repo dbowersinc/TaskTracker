@@ -39,11 +39,8 @@ class TasksHandler:
             task_id=task.id,
             state=state
         )
-        new_current_task = UserCurrentTask(
-            user_id=self.user.id,
-            task_id=task.id
-        )
-        session.add_all([new_state_record, new_current_task])
+        self.user.user_current_tasks.task = task
+        session.add(new_state_record)
 
     def generate_state_options(self, task: Task):
         options = []
