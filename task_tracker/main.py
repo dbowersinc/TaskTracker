@@ -25,14 +25,3 @@ def handle_user(session, username: str, password: str):
 
     return payload
 
-
-
-def cli_communicator(username: str, password: str):
-
-
-
-    # Handle task action
-
-    # Report and exit || perform another action
-
-    print("cli_communicator()")
