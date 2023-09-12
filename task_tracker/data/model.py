@@ -19,7 +19,7 @@ class User(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     username: Mapped[str] = mapped_column(String(50), nullable=False, unique=True)
     password: Mapped[str] = mapped_column(String(256), nullable=False)
-    user_current_tasks: Mapped[List["UserCurrentTask"]] = relationship(back_populates="user")
+    user_current_tasks: Mapped["UserCurrentTask"] = relationship(back_populates="user")
     user_task_state_records: Mapped[List["UserTaskStateRecord"]] = relationship(back_populates="user")
 
 
